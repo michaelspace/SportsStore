@@ -28,8 +28,12 @@ namespace SportsStore
 
             app.UseStatusCodePages();
             app.UseStaticFiles(); // włącza obsługę treści statycznej znajdującej się w katalogu wwwroot
-            app.UseMvc(routes => {
-
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Product}/{action=List}/{id?}"
+                );
             });
         }
     }
