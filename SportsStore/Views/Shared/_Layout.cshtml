@@ -4,10 +4,20 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>SportsStore</title>
+    <link rel="stylesheet" href="~/css/bundle.min.css" />
 </head>
 <body>
-    <div>
-        @RenderBody()
+    <div class="navbar navbar-inverse bg-inverse" role="navigation">
+        <a class="navbar-brand" href="#">Sklep sportowy</a>
     </div>
+    <div class="row m-1 p-1">
+        <div id="categories" class="col-3">
+            Miejsce na nawigacje
+        </div>
+        <div class="col-9">
+            @RenderBody()
+        </div>
+    </div>
+    <script src="~/js/bundle.min.js"></script>
 </body>
 </html>
