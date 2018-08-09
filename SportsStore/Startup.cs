@@ -47,6 +47,11 @@ namespace SportsStore
                     template: "Produkty/Strona{productPage}",
                     defaults: new { Controller = "Product", Action = "List"}
                 );
+
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Product}/{action=List}/{id?}"
+                );
             });
             SeedData.EnsurePopulated(app);
         }
