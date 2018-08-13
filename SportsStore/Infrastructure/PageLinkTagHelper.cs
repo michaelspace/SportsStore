@@ -30,6 +30,12 @@ namespace SportsStore.Infrastructure
 
         public string PageAction { get; set; }
 
+        // kazdy atrybut o prefixie page-url- zostanie dodany do slownika
+        [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
+        public Dictionary<string,object> PageUrlValues { get; set; }
+            = new Dictionary<string, object>();
+
+
         // stosowanie mapowania miedzy formatem nazwy atrybutu HTML a C#
         // (page-class-normal) w HTML == (PageClassNormal) w C#
         public bool PageClassesEnabled { get; set; } = false;
@@ -46,7 +52,8 @@ namespace SportsStore.Infrastructure
             for (int i = 1; i <= PageModel.TotalPages; i++)
             {
                 TagBuilder tag = new TagBuilder("a");
-                tag.Attributes["href"] = urlHelper.Action(PageAction, new {productPage = i});
+                PageUrlValues["productPage"] = i;
+                tag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
 
                 if (PageClassesEnabled)
                 {
