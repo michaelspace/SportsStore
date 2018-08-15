@@ -29,6 +29,8 @@ namespace SportsStore
             services.AddTransient<IProductRepository, EFProductRepository>();
 
             services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -40,6 +42,7 @@ namespace SportsStore
 
             app.UseStatusCodePages();
             app.UseStaticFiles(); // włącza obsługę treści statycznej znajdującej się w katalogu wwwroot
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
