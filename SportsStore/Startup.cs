@@ -31,6 +31,8 @@ namespace SportsStore
             services.AddScoped<Cart>(s => SessionCart.GetCart(s)); // ten sam obiekt bedzie uzyty do spelnienia powiazanych requests dla egzemplarzy Cart
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // w celu uzyskania dostepu do sesji z SessionCart
 
+            services.AddTransient<IOrderRepository, EFOrderRepository>();
+
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();

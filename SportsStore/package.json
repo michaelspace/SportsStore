@@ -2,18 +2,11 @@
   "version": "1.0.0",
   "name": "asp.net",
   "private": true,
-  "devDependencies": {
-    "del": "^3.0.0",
-    "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-cssmin": "^0.2.0",
-    "gulp-htmlmin": "^4.0.0",
-    "gulp-uglify": "^3.0.1",
-    "merge-stream": "^1.0.1"
-  },
+  "devDependencies": {},
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
     "jquery": "3.3.1",
-    "popper.js": "1.12.9"
+    "popper.js": "1.12.9",
+    "tether"  : "1.4.4"
   }
 }
