@@ -8,6 +8,7 @@
             <th>Produkt</th>
             <th class="text-right">Cena</th>
             <th class="text-right">Wartość</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -18,6 +19,16 @@
                 <td class="text-left">@line.Product.Name</td>
                 <td class="text-right">@line.Product.Price.ToString("C")</td>
                 <td class="text-right">@((line.Quantity * line.Product.Price).ToString("C"))</td>
+                <td>
+                    <form asp-action="RemoveFromCart" method="post">
+                        <input type="hidden" name="productID" value="@line.Product.ProductID" />
+                        <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+                        
+                        <button type="submit" class="btn btn-sm btn-danger">
+                            Usuń
+                        </button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
@@ -25,6 +36,18 @@
         <tr>
             <td colspan="3" class="text-right">Razem:</td>
             <td class="text-right">@Model.Cart.ComputeTotalValue().ToString("C")</td>
+            <td>
+                @if (Model.Cart.Lines.Any())
+                {
+                    <form asp-action="Clear" method="post">
+                        <input type="hidden" name="returnUrl" value="@Model.ReturnUrl"/>
+
+                        <button type="submit" class="btn btn-sm btn-danger">
+                            Usuń wszystko
+                        </button>
+                    </form>
+                }
+            </td>
         </tr>
     </tfoot>
 </table>

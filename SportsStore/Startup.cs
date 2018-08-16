@@ -28,6 +28,9 @@ namespace SportsStore
                     Configuration["Data:SportStoreProducts:ConnectionString"]));
             services.AddTransient<IProductRepository, EFProductRepository>();
 
+            services.AddScoped<Cart>(s => SessionCart.GetCart(s)); // ten sam obiekt bedzie uzyty do spelnienia powiazanych requests dla egzemplarzy Cart
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // w celu uzyskania dostepu do sesji z SessionCart
+
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();
