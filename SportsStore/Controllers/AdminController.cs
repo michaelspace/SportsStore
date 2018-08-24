@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models;
 
 namespace SportsStore.Controllers
 {
+    [Authorize]
     public class AdminController: Controller
     {
         private readonly IProductRepository _repository;
@@ -50,5 +52,21 @@ namespace SportsStore.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public IActionResult SeedDatabase()
+        {
+            SeedData.EnsurePopulated(HttpContext.RequestServices);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Orders()
+        {
+            if (User?.Identity?.Name != "Admin")
+            {
+                return Redirect("/Error");
+            }
+            return Redirect("/Order/List");
+        } 
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +29,15 @@ namespace SportsStore
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration["Data:SportStoreProducts:ConnectionString"]));
+
+            services.AddDbContext<AppIdentityDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration["Data:SportStoreIdentity:ConnectionString"]));
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddTransient<IProductRepository, EFProductRepository>();
 
             services.AddScoped<Cart>(s => SessionCart.GetCart(s)); // ten sam obiekt bedzie uzyty do spelnienia powiazanych requests dla egzemplarzy Cart
@@ -45,6 +55,11 @@ namespace SportsStore
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseStatusCodePages();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
             }
 
             var defaultCulture = new CultureInfo("en-US");
@@ -55,12 +70,18 @@ namespace SportsStore
                 SupportedUICultures = new List<CultureInfo> { defaultCulture }
             };
             app.UseRequestLocalization(localizationOptions);
-
-            app.UseStatusCodePages();
+            
             app.UseStaticFiles(); // włącza obsługę treści statycznej znajdującej się w katalogu wwwroot
             app.UseSession();
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "Error",
+                    template: "Error",
+                    defaults: new { controller = "Error", action = "Error" }
+                );
+
                 routes.MapRoute(
                     name: null,
                     template: "{category}/Strona{productPage:int}",
@@ -90,7 +111,11 @@ namespace SportsStore
                     template: "{controller}/{action}/{id?}"
                 );
             });
-            SeedData.EnsurePopulated(app);
+
+            // Inicjowanie baz danych:
+
+            // SeedData.EnsurePopulated(app);
+            // IdentitySeedData.EnsurePopulated(app);
         }
     }
 }

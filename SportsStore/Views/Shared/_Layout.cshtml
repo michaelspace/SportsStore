@@ -7,12 +7,32 @@
     <link rel="stylesheet" href="~/css/site.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
-<body>
+<body style="margin-bottom: 5rem">
     <div class="navbar navbar-inverse bg-inverse" role="navigation">
         <div class="row">
             <a class="col navbar-brand" href="#">Sklep sportowy</a>
-            <div class="col-4 text-right">
+            <div class="col d-inline text-right">
                 @await Component.InvokeAsync("CartSummary")
+
+                @if (User?.Identity?.IsAuthenticated ?? false)
+                {
+                    if (User?.Identity?.Name == "Admin")
+                    {
+                        <a class="btn btn-sm btn-primary p-1" asp-action="Login" asp-controller="Account">
+                            Panel administracyjny
+                        </a>
+                    }
+
+                    <a class="btn btn-sm btn-primary p-1" asp-action="Logout" asp-controller="Account">
+                        Wyloguj
+                    </a>
+                }
+                else
+                {
+                    <a class="btn btn-sm btn-primary" asp-action="Login" asp-controller="Account">
+                        Zaloguj
+                    </a>
+                }
             </div>
         </div>
     </div>
@@ -24,6 +44,19 @@
             @RenderBody()
         </div>
     </div>
+
+    <footer class="card-footer text-center"
+            style="position: fixed; bottom: 0; width: 100%;">
+        <div class="container">
+            <span class="text-muted">
+                &copy; 2018 -
+                <a href="https://github.com/michaelspace/SportsStore" style="text-decoration: none">
+                    Sports Store
+                </a>
+                <i class="fa fa-github"></i>
+            </span>
+        </div>
+    </footer>
     <script src="~/js/jquery.min.js"></script>
     <script src="~/js/site.min.js"></script>
 </body>
