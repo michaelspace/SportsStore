@@ -11,7 +11,7 @@ namespace SportsStore.Models
     public static class IdentitySeedData
     {
         private const string adminUser = "Admin";
-        private const string adminPassword = "_$Admin$1$2$6$";
+        private const string adminPassword = "Admin$123";
 
         public static async Task EnsurePopulated(UserManager<IdentityUser> userManager)
         {
