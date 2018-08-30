@@ -1,5 +1,6 @@
 # SportsStore - MVC
-Aplikacja sklepu sportowego w ramach nauki **Microsoft ASP.NET Core 2.0 MVC**.
+Aplikacja sklepu sportowego w ramach nauki **Microsoft ASP.NET Core 2.0 MVC** oraz<br>
+lektury książki *Pro ASP.NET Core MVC 2, 7th Edition* Adama Freemana.
 
 ---
 
@@ -26,3 +27,5 @@ dotnet ef database update --context AppIdentityDbContext
 ```
 dotnet run
 ```
+
+Po pierwszym uruchomieniu można zalogować się jako administrator i zainicjować bazę danych przykładowymi produktami lub dodać własne. Login i hasło: Admin Admin$123
